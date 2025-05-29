@@ -238,7 +238,7 @@ if st.session_state.start_flg:
         # 音声入力ファイルから文字起こしテキストを取得
         with st.spinner('音声入力をテキストに変換中...'):
             transcript = ft.transcribe_audio(audio_input_file_path)
-            audio_input_text = transcript.text
+            audio_input_text = transcript
 
         # 音声入力テキストの画面表示
         with st.chat_message("user", avatar=ct.USER_ICON_PATH):
@@ -297,7 +297,7 @@ if st.session_state.start_flg:
         with st.spinner('音声入力をテキストに変換中...'):
             # 音声入力ファイルから文字起こしテキストを取得
             transcript = ft.transcribe_audio(audio_input_file_path)
-            audio_input_text = transcript.text
+            audio_input_text = transcript
 
         # AIメッセージとユーザーメッセージの画面表示
         with st.chat_message("assistant", avatar=ct.AI_ICON_PATH):

@@ -18,6 +18,7 @@ from langchain.memory import ConversationSummaryBufferMemory
 from langchain_openai import ChatOpenAI
 from langchain.chains import ConversationChain
 import constants as ct
+import openai
 
 def record_audio(audio_input_file_path):
     """
@@ -38,17 +39,19 @@ def record_audio(audio_input_file_path):
     else:
         st.stop()
 
+from openai import OpenAI
+
+client = OpenAI()  # グローバルに定義しておくのも良いです
+
 def transcribe_audio(audio_input_file_path):
     """
-    音声入力ファイルから文字起こしテキストを取得
-    Args:
-        audio_input_file_path: 音声入力ファイルのパス
+    音声入力ファイルから文字起こしテキストを取得（新API対応版）
     """
 
     with open(audio_input_file_path, 'rb') as audio_input_file:
-        transcript = openai.Audio.transcribe(
+        transcript = client.audio.transcriptions.create(
             model="whisper-1",
-            file=audio_file,
+            file=audio_input_file,
             language="en",
             temperature=0,  # 出力の安定性を向上
             prompt="This is a conversation for practicing everyday English in a clear voice.",  # 文脈ヒントを提供
